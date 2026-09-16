@@ -1,0 +1,357 @@
+{
+  "info": {
+    "_postman_id": "9b12d59e-4c31-4a7b-a19a-2ef4280f9a12",
+    "name": "Placement Management System API",
+    "description": "Comprehensive REST API Collection for College Placement Management System built with Django REST Framework.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://127.0.0.1:8000/api",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Dashboard",
+      "item": [
+        {
+          "name": "Get Dashboard Statistics",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/dashboard/stats/",
+              "host": ["{{baseUrl}}"],
+              "path": ["dashboard", "stats", ""]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Students",
+      "item": [
+        {
+          "name": "List All Students",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/students/",
+              "host": ["{{baseUrl}}"],
+              "path": ["students", ""]
+            }
+          }
+        },
+        {
+          "name": "Search / Filter Students",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/students/?search=Aarav&department=CSE",
+              "host": ["{{baseUrl}}"],
+              "path": ["students", ""],
+              "query": [
+                { "key": "search", "value": "Aarav" },
+                { "key": "department", "value": "CSE" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Student by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/students/1/",
+              "host": ["{{baseUrl}}"],
+              "path": ["students", "1", ""]
+            }
+          }
+        },
+        {
+          "name": "Create Student (POST)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"student_id\": \"STU202610\",\n  \"name\": \"Ravi Teja\",\n  \"email\": \"ravi.teja@college.edu\",\n  \"phone\": \"9876543299\",\n  \"department\": \"CSE\",\n  \"year\": 4,\n  \"cgpa\": 9.35,\n  \"skills\": \"Python, Django, AWS, React\",\n  \"placement_status\": \"Not Placed\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/students/",
+              "host": ["{{baseUrl}}"],
+              "path": ["students", ""]
+            }
+          }
+        },
+        {
+          "name": "Update Student (PUT)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"student_id\": \"STU202610\",\n  \"name\": \"Ravi Teja Updated\",\n  \"email\": \"ravi.teja@college.edu\",\n  \"phone\": \"9876543299\",\n  \"department\": \"CSE\",\n  \"year\": 4,\n  \"cgpa\": 9.50,\n  \"skills\": \"Python, Django, AWS, React, Kubernetes\",\n  \"placement_status\": \"Placed\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/students/1/",
+              "host": ["{{baseUrl}}"],
+              "path": ["students", "1", ""]
+            }
+          }
+        },
+        {
+          "name": "Patch Student (PATCH)",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cgpa\": 9.65\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/students/1/",
+              "host": ["{{baseUrl}}"],
+              "path": ["students", "1", ""]
+            }
+          }
+        },
+        {
+          "name": "Delete Student (DELETE)",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/students/1/",
+              "host": ["{{baseUrl}}"],
+              "path": ["students", "1", ""]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Companies",
+      "item": [
+        {
+          "name": "List All Companies",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/companies/",
+              "host": ["{{baseUrl}}"],
+              "path": ["companies", ""]
+            }
+          }
+        },
+        {
+          "name": "Search Companies",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/companies/?search=Google",
+              "host": ["{{baseUrl}}"],
+              "path": ["companies", ""],
+              "query": [
+                { "key": "search", "value": "Google" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Company by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/companies/1/",
+              "host": ["{{baseUrl}}"],
+              "path": ["companies", "1", ""]
+            }
+          }
+        },
+        {
+          "name": "Create Company (POST)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"company_id\": \"COMP106\",\n  \"company_name\": \"Adobe Systems\",\n  \"hr_name\": \"Karan Johar\",\n  \"hr_email\": \"kjohar@adobe.com\",\n  \"job_role\": \"Software Quality Engineer\",\n  \"package\": 16.50,\n  \"location\": \"Noida\",\n  \"required_skills\": \"Java, Selenium, Python, Test Automation\",\n  \"drive_date\": \"2026-11-10\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/companies/",
+              "host": ["{{baseUrl}}"],
+              "path": ["companies", ""]
+            }
+          }
+        },
+        {
+          "name": "Update Company (PUT)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"company_id\": \"COMP106\",\n  \"company_name\": \"Adobe Systems\",\n  \"hr_name\": \"Karan Johar\",\n  \"hr_email\": \"kjohar@adobe.com\",\n  \"job_role\": \"Senior Software Quality Engineer\",\n  \"package\": 18.00,\n  \"location\": \"Noida\",\n  \"required_skills\": \"Java, Selenium, Python, CI/CD\",\n  \"drive_date\": \"2026-11-12\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/companies/1/",
+              "host": ["{{baseUrl}}"],
+              "path": ["companies", "1", ""]
+            }
+          }
+        },
+        {
+          "name": "Delete Company (DELETE)",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/companies/1/",
+              "host": ["{{baseUrl}}"],
+              "path": ["companies", "1", ""]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Placements",
+      "item": [
+        {
+          "name": "List All Placements",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/placements/",
+              "host": ["{{baseUrl}}"],
+              "path": ["placements", ""]
+            }
+          }
+        },
+        {
+          "name": "Filter Placements (Company & Status)",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/placements/?company=1&status=Selected",
+              "host": ["{{baseUrl}}"],
+              "path": ["placements", ""],
+              "query": [
+                { "key": "company", "value": "1" },
+                { "key": "status", "value": "Selected" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Placement by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/placements/1/",
+              "host": ["{{baseUrl}}"],
+              "path": ["placements", "1", ""]
+            }
+          }
+        },
+        {
+          "name": "Create Placement (POST)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"placement_id\": \"PLC009\",\n  \"student\": 3,\n  \"company\": 2,\n  \"job_role\": \"Cloud Engineer\",\n  \"package\": 22.00,\n  \"placement_date\": \"2026-09-16\",\n  \"status\": \"Selected\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/placements/",
+              "host": ["{{baseUrl}}"],
+              "path": ["placements", ""]
+            }
+          }
+        },
+        {
+          "name": "Update Placement (PUT)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"placement_id\": \"PLC009\",\n  \"student\": 3,\n  \"company\": 2,\n  \"job_role\": \"Senior Cloud Engineer\",\n  \"package\": 24.00,\n  \"placement_date\": \"2026-09-16\",\n  \"status\": \"Joined\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/placements/1/",
+              "host": ["{{baseUrl}}"],
+              "path": ["placements", "1", ""]
+            }
+          }
+        },
+        {
+          "name": "Delete Placement (DELETE)",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/placements/1/",
+              "host": ["{{baseUrl}}"],
+              "path": ["placements", "1", ""]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

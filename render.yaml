@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: placement-management-system
+    env: python
+    buildCommand: "pip install -r requirements.txt && python backend/manage.py migrate && python backend/manage.py seed_data && python backend/manage.py collectstatic --noinput"
+    startCommand: "gunicorn placement_project.wsgi:application --chdir backend"
+    envVars:
+      - key: DJANGO_DEBUG
+        value: "False"
+      - key: PYTHON_VERSION
+        value: 3.13.0
