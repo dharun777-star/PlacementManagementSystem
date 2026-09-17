@@ -1,10 +1,10 @@
-# PlacementHub - College Placement Management System
+# PlacementManagementSystem.com - College Placement Management System
 
-[![Live Demo](https://img.shields.io/badge/Live_Demo-Online-brightgreen?style=for-the-badge&logo=google-chrome)](https://webpage-instrument-become-hewlett.trycloudflare.com)
+[![Live Website](https://img.shields.io/badge/Live_Website-PlacementManagementSystem.com-brightgreen?style=for-the-badge&logo=google-chrome)](https://webpage-instrument-become-hewlett.trycloudflare.com)
 [![GitHub Repo](https://img.shields.io/badge/GitHub-Repository-blue?style=for-the-badge&logo=github)](https://github.com/dharun777-star/PlacementManagementSystem)
 
-> 🚀 **Live Deployed Website**: **[https://webpage-instrument-become-hewlett.trycloudflare.com](https://webpage-instrument-become-hewlett.trycloudflare.com)**  
-> *(Live public HTTPS link — instant access worldwide without any passwords or setup!)*  
+> 🚀 **Live Website Link**: **[PlacementManagementSystem.com](https://webpage-instrument-become-hewlett.trycloudflare.com)**  
+> *(Live Public HTTPS Link: `https://webpage-instrument-become-hewlett.trycloudflare.com`)*  
 > 💻 **Local URL**: `http://127.0.0.1:8000/`  
 > 📂 **GitHub Repository**: [https://github.com/dharun777-star/PlacementManagementSystem](https://github.com/dharun777-star/PlacementManagementSystem)
 
