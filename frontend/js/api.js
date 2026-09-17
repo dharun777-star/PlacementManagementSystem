@@ -5,13 +5,13 @@
 
 const API = (() => {
     // Determine base URL:
-    // If opened via Django server (e.g., http://127.0.0.1:8000/), use relative /api/
-    // If opened as standalone HTML (e.g., Live Server or file://), use full backend URL
+    // If opened via any web domain (localhost, Cloudflare tunnel, Render, etc.), use relative /api
+    // If opened directly from disk (file://), use http://127.0.0.1:8000/api
     const getBaseUrl = () => {
-        if (window.location.protocol.startsWith('http') && window.location.port === '8000') {
-            return '/api';
+        if (window.location.protocol === 'file:') {
+            return 'http://127.0.0.1:8000/api';
         }
-        return 'http://127.0.0.1:8000/api';
+        return '/api';
     };
 
     const BASE_URL = getBaseUrl();
