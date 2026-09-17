@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PlacementHub - College Placement Management System</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-brand">
+                <div class="brand-icon">
+                    <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.2">
+                        <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+                        <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+                    </svg>
+                </div>
+                <div class="brand-text">
+                    <h2>PlacementHub</h2>
+                    <span>College Placement Cell</span>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <button class="nav-item active" data-section="dashboard">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="14" width="7" height="7"></rect>
+                        <rect x="3" y="14" width="7" height="7"></rect>
+                    </svg>
+                    <span>Dashboard</span>
+                </button>
+
+                <button class="nav-item" data-section="students">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="9" cy="7" r="4"></circle>
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    </svg>
+                    <span>Students</span>
+                </button>
+
+                <button class="nav-item" data-section="companies">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                        <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                    </svg>
+                    <span>Companies</span>
+                </button>
+
+                <button class="nav-item" data-section="placements">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="8" r="7"></circle>
+                        <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
+                    </svg>
+                    <span>Placements</span>
+                </button>
+
+                <button class="nav-item" data-section="viva-guide">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                    </svg>
+                    <span>Viva & API Docs</span>
+                </button>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="system-status">
+                    <span class="status-dot online"></span>
+                    <span class="status-text">Backend: Django REST</span>
+                </div>
+                <div class="db-badge">
+                    <span class="badge-title">Database:</span> SQLite (Relational)
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-wrapper">
+            <!-- Top Header -->
+            <header class="topbar">
+                <div class="topbar-left">
+                    <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle menu">
+                        <span></span><span></span><span></span>
+                    </button>
+                    <div class="page-title-group">
+                        <h1 id="pageTitle">Placement Dashboard</h1>
+                        <p id="pageSubtitle">Overview of placement drives, students & recruitment records</p>
+                    </div>
+                </div>
+
+                <div class="topbar-actions">
+                    <button class="btn btn-secondary btn-sm" id="btnRefreshData" title="Refresh current view">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M23 4v6h-6"></path>
+                            <path d="M1 20v-6h6"></path>
+                            <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+                        </svg>
+                        <span>Refresh</span>
+                    </button>
+                    <button class="btn btn-primary btn-sm" id="btnQuickAdd">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                        </svg>
+                        <span id="quickAddLabel">Add Student</span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Dynamic Views Container -->
+            <div class="content-container">
+
+                <!-- 1. DASHBOARD SECTION -->
+                <section class="page-section active" id="section-dashboard">
+                    <!-- Metric Cards Row -->
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon icon-students">
+                                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="9" cy="7" r="4"></circle>
+                                </svg>
+                            </div>
+                            <div class="stat-data">
+                                <span class="stat-label">Total Students</span>
+                                <h3 class="stat-value" id="statTotalStudents">0</h3>
+                                <span class="stat-trend neutral">Enrolled in placement pool</span>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-icon icon-companies">
+                                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                                    <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                                </svg>
+                            </div>
+                            <div class="stat-data">
+                                <span class="stat-label">Total Companies</span>
+                                <h3 class="stat-value" id="statTotalCompanies">0</h3>
+                                <span class="stat-trend positive">Recruiting partners</span>
+                            </div>
+                        </div>
+
+                        <div class="stat-card highlight-success">
+                            <div class="stat-icon icon-placed">
+                                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                                </svg>
+                            </div>
+                            <div class="stat-data">
+                                <span class="stat-label">Placed Students</span>
+                                <h3 class="stat-value text-success" id="statPlacedStudents">0</h3>
+                                <span class="stat-trend positive" id="statPlacementRateBadge">0% Success Rate</span>
+                            </div>
+                        </div>
+
+                        <div class="stat-card highlight-warning">
+                            <div class="stat-icon icon-unplaced">
+                                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <line x1="12" y1="8" x2="12" y2="12"></line>
+                                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                                </svg>
+                            </div>
+                            <div class="stat-data">
+                                <span class="stat-label">Students Not Placed</span>
+                                <h3 class="stat-value text-warning" id="statNotPlacedStudents">0</h3>
+                                <span class="stat-trend warning">Actively seeking opportunities</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Secondary Highlights Row -->
+                    <div class="analytics-row">
+                        <div class="analytics-card">
+                            <div class="card-header">
+                                <h3>Package Highlights</h3>
+                                <span class="card-tag">LPA (Lakhs Per Annum)</span>
+                            </div>
+                            <div class="package-metrics">
+                                <div class="pkg-metric-box">
+                                    <span class="metric-title">Highest Package</span>
+                                    <h4 class="metric-number" id="statHighestPackage">₹0.0 LPA</h4>
+                                </div>
+                                <div class="pkg-metric-box">
+                                    <span class="metric-title">Average Package</span>
+                                    <h4 class="metric-number" id="statAvgPackage">₹0.0 LPA</h4>
+                                </div>
+                                <div class="pkg-metric-box">
+                                    <span class="metric-title">Total Placements</span>
+                                    <h4 class="metric-number" id="statTotalPlacements">0</h4>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="analytics-card">
+                            <div class="card-header">
+                                <h3>Department-wise Placement Ratio</h3>
+                                <span class="card-tag">Branches</span>
+                            </div>
+                            <div class="dept-list" id="deptBreakdownList">
+                                <div class="empty-state-mini">Loading department breakdown...</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Placements & Top Companies Tables -->
+                    <div class="dashboard-tables-grid">
+                        <div class="panel-card">
+                            <div class="panel-header">
+                                <h3>Recent Placement Drives</h3>
+                                <button class="btn btn-link" onclick="app.navigateTo('placements')">View All Placements &rarr;</button>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="data-table" id="tableRecentPlacements">
+                                    <thead>
+                                        <tr>
+                                            <th>Student</th>
+                                            <th>Company</th>
+                                            <th>Role</th>
+                                            <th>Package</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="recentPlacementsBody">
+                                        <tr><td colspan="5" class="text-center py-4">Loading recent placements...</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="panel-card">
+                            <div class="panel-header">
+                                <h3>Top Recruiting Partners</h3>
+                                <button class="btn btn-link" onclick="app.navigateTo('companies')">View All Companies &rarr;</button>
+                            </div>
+                            <div class="top-companies-list" id="topCompaniesList">
+                                <div class="text-center py-4">Loading top recruiters...</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 2. STUDENTS SECTION -->
+                <section class="page-section" id="section-students">
+                    <div class="section-toolbar">
+                        <div class="search-filter-group">
+                            <div class="search-box">
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="11" cy="11" r="8"></circle>
+                                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                </svg>
+                                <input type="text" id="studentSearchInput" placeholder="Search name, roll ID, or skill...">
+                            </div>
+
+                            <div class="filter-dropdown">
+                                <select id="studentDeptFilter">
+                                    <option value="">All Departments</option>
+                                    <option value="CSE">CSE</option>
+                                    <option value="IT">IT</option>
+                                    <option value="ECE">ECE</option>
+                                    <option value="EEE">EEE</option>
+                                    <option value="MECH">MECH</option>
+                                    <option value="CIVIL">CIVIL</option>
+                                    <option value="AIDS">AIDS</option>
+                                </select>
+                            </div>
+
+                            <div class="filter-dropdown">
+                                <select id="studentStatusFilter">
+                                    <option value="">All Placement Status</option>
+                                    <option value="Placed">Placed</option>
+                                    <option value="Not Placed">Not Placed</option>
+                                </select>
+                            </div>
+
+                            <button class="btn btn-ghost" id="studentFilterReset" title="Clear Filters">Reset</button>
+                        </div>
+
+                        <button class="btn btn-primary" id="btnAddStudent">
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="12" y1="5" x2="12" y2="19"></line>
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                            </svg>
+                            <span>Add Student</span>
+                        </button>
+                    </div>
+
+                    <div class="table-card">
+                        <div class="table-card-header">
+                            <div class="header-count" id="studentCountLabel">Showing 0 students</div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="data-table" id="studentsTable">
+                                <thead>
+                                    <tr>
+                                        <th>Student ID</th>
+                                        <th>Name</th>
+                                        <th>Email & Phone</th>
+                                        <th>Dept / Year</th>
+                                        <th>CGPA</th>
+                                        <th>Skills</th>
+                                        <th>Status</th>
+                                        <th class="text-right">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="studentsTableBody">
+                                    <tr><td colspan="8" class="text-center py-4">Loading students...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 3. COMPANIES SECTION -->
+                <section class="page-section" id="section-companies">
+                    <div class="section-toolbar">
+                        <div class="search-filter-group">
+                            <div class="search-box">
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="11" cy="11" r="8"></circle>
+                                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                </svg>
+                                <input type="text" id="companySearchInput" placeholder="Search company name, role, or location...">
+                            </div>
+                            <button class="btn btn-ghost" id="companyFilterReset">Reset</button>
+                        </div>
+
+                        <button class="btn btn-primary" id="btnAddCompany">
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="12" y1="5" x2="12" y2="19"></line>
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                            </svg>
+                            <span>Add Company</span>
+                        </button>
+                    </div>
+
+                    <div class="table-card">
+                        <div class="table-card-header">
+                            <div class="header-count" id="companyCountLabel">Showing 0 companies</div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="data-table" id="companiesTable">
+                                <thead>
+                                    <tr>
+                                        <th>Company ID</th>
+                                        <th>Company Name</th>
+                                        <th>HR Contact</th>
+                                        <th>Job Role</th>
+                                        <th>Package (LPA)</th>
+                                        <th>Location</th>
+                                        <th>Drive Date</th>
+                                        <th>Required Skills</th>
+                                        <th class="text-right">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="companiesTableBody">
+                                    <tr><td colspan="9" class="text-center py-4">Loading companies...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 4. PLACEMENTS SECTION -->
+                <section class="page-section" id="section-placements">
+                    <div class="section-toolbar">
+                        <div class="search-filter-group">
+                            <div class="search-box">
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="11" cy="11" r="8"></circle>
+                                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                </svg>
+                                <input type="text" id="placementSearchInput" placeholder="Search student, company, or role...">
+                            </div>
+
+                            <div class="filter-dropdown">
+                                <select id="placementCompanyFilter">
+                                    <option value="">All Companies</option>
+                                </select>
+                            </div>
+
+                            <div class="filter-dropdown">
+                                <select id="placementStatusFilter">
+                                    <option value="">All Statuses</option>
+                                    <option value="Selected">Selected</option>
+                                    <option value="Offered">Offered</option>
+                                    <option value="Joined">Joined</option>
+                                    <option value="Pending">Pending</option>
+                                </select>
+                            </div>
+
+                            <button class="btn btn-ghost" id="placementFilterReset">Reset</button>
+                        </div>
+
+                        <button class="btn btn-primary" id="btnAddPlacement">
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="12" y1="5" x2="12" y2="19"></line>
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                            </svg>
+                            <span>Add Placement</span>
+                        </button>
+                    </div>
+
+                    <div class="table-card">
+                        <div class="table-card-header">
+                            <div class="header-count" id="placementCountLabel">Showing 0 placements</div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="data-table" id="placementsTable">
+                                <thead>
+                                    <tr>
+                                        <th>Placement ID</th>
+                                        <th>Student</th>
+                                        <th>Company</th>
+                                        <th>Job Role</th>
+                                        <th>Package</th>
+                                        <th>Placement Date</th>
+                                        <th>Status</th>
+                                        <th class="text-right">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="placementsTableBody">
+                                    <tr><td colspan="8" class="text-center py-4">Loading placements...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 5. VIVA & API GUIDE SECTION -->
+                <section class="page-section" id="section-viva-guide">
+                    <div class="guide-grid">
+                        <div class="guide-card">
+                            <div class="guide-card-header">
+                                <h3>Architecture & Project Highlights</h3>
+                                <span class="badge badge-info">For Viva & Examiner</span>
+                            </div>
+                            <div class="guide-content">
+                                <p><strong>Stack:</strong> HTML5, Modern CSS3, Vanilla JS (ES6+), Python Django 6, Django REST Framework, SQLite Database.</p>
+                                <h4>Key Relational Architecture:</h4>
+                                <ul>
+                                    <li><strong>Student Model:</strong> Roll ID (Unique), Name, Email (Unique), Phone, Department, Year, CGPA (0-10), Skills, Placement Status.</li>
+                                    <li><strong>Company Model:</strong> Company ID (Unique), Company Name, HR Name, HR Email, Role, Package (LPA > 0), Location, Drive Date.</li>
+                                    <li><strong>Placement Model:</strong> Links Student (FK) and Company (FK) with role, package, placement date, and status. Automatic synchronization of Student's placement status on create, update, or delete!</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="guide-card">
+                            <div class="guide-card-header">
+                                <h3>REST API Endpoints & CRUD Map</h3>
+                                <span class="badge badge-success">REST Standard</span>
+                            </div>
+                            <div class="guide-content">
+                                <div class="endpoint-table-wrap">
+                                    <table class="api-ref-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Method</th>
+                                                <th>Endpoint</th>
+                                                <th>Description</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td><span class="badge badge-get">GET</span></td>
+                                                <td><code>/api/dashboard/stats/</code></td>
+                                                <td>Get aggregated dashboard statistics</td>
+                                            </tr>
+                                            <tr>
+                                                <td><span class="badge badge-get">GET</span></td>
+                                                <td><code>/api/students/</code></td>
+                                                <td>List all students (Search & filter)</td>
+                                            </tr>
+                                            <tr>
+                                                <td><span class="badge badge-post">POST</span></td>
+                                                <td><code>/api/students/</code></td>
+                                                <td>Create student record</td>
+                                            </tr>
+                                            <tr>
+                                                <td><span class="badge badge-put">PUT/PATCH</span></td>
+                                                <td><code>/api/students/{id}/</code></td>
+                                                <td>Update student details</td>
+                                            </tr>
+                                            <tr>
+                                                <td><span class="badge badge-delete">DELETE</span></td>
+                                                <td><code>/api/students/{id}/</code></td>
+                                                <td>Remove student record</td>
+                                            </tr>
+                                            <tr>
+                                                <td><span class="badge badge-get">GET</span></td>
+                                                <td><code>/api/companies/</code></td>
+                                                <td>List companies (Search & sort)</td>
+                                            </tr>
+                                            <tr>
+                                                <td><span class="badge badge-post">POST</span></td>
+                                                <td><code>/api/companies/</code></td>
+                                                <td>Create company drive</td>
+                                            </tr>
+                                            <tr>
+                                                <td><span class="badge badge-get">GET</span></td>
+                                                <td><code>/api/placements/</code></td>
+                                                <td>List placements (Filter by company/status)</td>
+                                            </tr>
+                                            <tr>
+                                                <td><span class="badge badge-post">POST</span></td>
+                                                <td><code>/api/placements/</code></td>
+                                                <td>Create placement record</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="guide-card">
+                            <div class="guide-card-header">
+                                <h3>Frequently Asked Viva Questions</h3>
+                                <span class="badge badge-warning">Preparation</span>
+                            </div>
+                            <div class="guide-content viva-faq">
+                                <div class="faq-item">
+                                    <strong>Q1: Why did you use Django REST Framework (DRF)?</strong>
+                                    <p>DRF provides clean serialization, declarative model serializers, automatic validation, viewsets, and standard HTTP response codes for decoupled frontend-backend communication.</p>
+                                </div>
+                                <div class="faq-item">
+                                    <strong>Q2: How does the system prevent duplicate students or companies?</strong>
+                                    <p>At the database level via <code>unique=True</code> constraints on <code>student_id</code>, <code>email</code>, and <code>company_id</code>, backed by custom serializer validators that catch duplicates before saving.</p>
+                                </div>
+                                <div class="faq-item">
+                                    <strong>Q3: How is student placement status kept consistent?</strong>
+                                    <p>The <code>Placement</code> model overrides <code>save()</code> and <code>delete()</code>: when an offer is assigned, the student's status immediately switches to "Placed". If all active placements are removed, it safely reverts to "Not Placed".</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- ==================== MODALS ==================== -->
+
+    <!-- 1. STUDENT MODAL -->
+    <div class="modal-overlay" id="studentModal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3 id="studentModalTitle">Add New Student</h3>
+                <button class="modal-close" onclick="app.closeModal('studentModal')">&times;</button>
+            </div>
+            <form id="studentForm" novalidate>
+                <input type="hidden" id="studentDbId">
+                <div class="modal-body">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="studentId">Student ID / Roll No <span class="text-danger">*</span></label>
+                            <input type="text" id="studentId" placeholder="e.g. STU202601" required>
+                            <div class="field-error" id="error_studentId"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="studentName">Full Name <span class="text-danger">*</span></label>
+                            <input type="text" id="studentName" placeholder="e.g. Rahul Sharma" required>
+                            <div class="field-error" id="error_studentName"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="studentEmail">Email Address <span class="text-danger">*</span></label>
+                            <input type="email" id="studentEmail" placeholder="rahul@college.edu" required>
+                            <div class="field-error" id="error_studentEmail"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="studentPhone">Phone Number <span class="text-danger">*</span></label>
+                            <input type="tel" id="studentPhone" placeholder="10-digit mobile number" required>
+                            <div class="field-error" id="error_studentPhone"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="studentDept">Department <span class="text-danger">*</span></label>
+                            <select id="studentDept" required>
+                                <option value="">Select Department</option>
+                                <option value="CSE">Computer Science & Engineering (CSE)</option>
+                                <option value="IT">Information Technology (IT)</option>
+                                <option value="ECE">Electronics & Communication (ECE)</option>
+                                <option value="EEE">Electrical & Electronics (EEE)</option>
+                                <option value="MECH">Mechanical Engineering (MECH)</option>
+                                <option value="CIVIL">Civil Engineering (CIVIL)</option>
+                                <option value="AIDS">Artificial Intelligence & Data Science (AIDS)</option>
+                            </select>
+                            <div class="field-error" id="error_studentDept"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="studentYear">Year of Study <span class="text-danger">*</span></label>
+                            <select id="studentYear" required>
+                                <option value="1">1st Year</option>
+                                <option value="2">2nd Year</option>
+                                <option value="3">3rd Year</option>
+                                <option value="4" selected>4th Year (Graduating)</option>
+                            </select>
+                            <div class="field-error" id="error_studentYear"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="studentCgpa">CGPA (0.00 - 10.00) <span class="text-danger">*</span></label>
+                            <input type="number" id="studentCgpa" step="0.01" min="0" max="10" placeholder="e.g. 8.75" required>
+                            <div class="field-error" id="error_studentCgpa"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="studentStatus">Placement Status <span class="text-danger">*</span></label>
+                            <select id="studentStatus" required>
+                                <option value="Not Placed" selected>Not Placed</option>
+                                <option value="Placed">Placed</option>
+                            </select>
+                            <div class="field-error" id="error_studentStatus"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="studentSkills">Skills (comma-separated)</label>
+                        <input type="text" id="studentSkills" placeholder="e.g. Python, Django, SQL, React">
+                        <small class="form-hint">Highlight programming languages, frameworks, or tools</small>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="app.closeModal('studentModal')">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="btnSaveStudent">Save Student</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 2. COMPANY MODAL -->
+    <div class="modal-overlay" id="companyModal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3 id="companyModalTitle">Add New Company</h3>
+                <button class="modal-close" onclick="app.closeModal('companyModal')">&times;</button>
+            </div>
+            <form id="companyForm" novalidate>
+                <input type="hidden" id="companyDbId">
+                <div class="modal-body">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="companyId">Company ID <span class="text-danger">*</span></label>
+                            <input type="text" id="companyId" placeholder="e.g. COMP101" required>
+                            <div class="field-error" id="error_companyId"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="companyName">Company Name <span class="text-danger">*</span></label>
+                            <input type="text" id="companyName" placeholder="e.g. Microsoft India" required>
+                            <div class="field-error" id="error_companyName"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="companyHrName">HR Contact Name <span class="text-danger">*</span></label>
+                            <input type="text" id="companyHrName" placeholder="e.g. Priya Nair" required>
+                            <div class="field-error" id="error_companyHrName"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="companyHrEmail">HR Email <span class="text-danger">*</span></label>
+                            <input type="email" id="companyHrEmail" placeholder="hr@company.com" required>
+                            <div class="field-error" id="error_companyHrEmail"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="companyJobRole">Job Role <span class="text-danger">*</span></label>
+                            <input type="text" id="companyJobRole" placeholder="e.g. Software Engineer" required>
+                            <div class="field-error" id="error_companyJobRole"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="companyPackage">Package (LPA) <span class="text-danger">*</span></label>
+                            <input type="number" id="companyPackage" step="0.01" min="0.1" placeholder="e.g. 14.5" required>
+                            <div class="field-error" id="error_companyPackage"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="companyLocation">Job Location <span class="text-danger">*</span></label>
+                            <input type="text" id="companyLocation" placeholder="e.g. Bangalore / Remote" required>
+                            <div class="field-error" id="error_companyLocation"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="companyDriveDate">Drive Date <span class="text-danger">*</span></label>
+                            <input type="date" id="companyDriveDate" required>
+                            <div class="field-error" id="error_companyDriveDate"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="companyRequiredSkills">Required Skills</label>
+                        <textarea id="companyRequiredSkills" rows="2" placeholder="e.g. Data Structures, Python, REST APIs, Git"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="app.closeModal('companyModal')">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="btnSaveCompany">Save Company</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 3. PLACEMENT MODAL -->
+    <div class="modal-overlay" id="placementModal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3 id="placementModalTitle">Add Placement Record</h3>
+                <button class="modal-close" onclick="app.closeModal('placementModal')">&times;</button>
+            </div>
+            <form id="placementForm" novalidate>
+                <input type="hidden" id="placementDbId">
+                <div class="modal-body">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="placementId">Placement ID <span class="text-danger">*</span></label>
+                            <input type="text" id="placementId" placeholder="e.g. PLC001" required>
+                            <div class="field-error" id="error_placementId"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="placementStatus">Status <span class="text-danger">*</span></label>
+                            <select id="placementStatus" required>
+                                <option value="Selected" selected>Selected</option>
+                                <option value="Offered">Offered</option>
+                                <option value="Joined">Joined</option>
+                                <option value="Pending">Pending</option>
+                            </select>
+                            <div class="field-error" id="error_placementStatus"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="placementStudent">Select Student <span class="text-danger">*</span></label>
+                            <select id="placementStudent" required>
+                                <option value="">Choose Student...</option>
+                            </select>
+                            <div class="field-error" id="error_placementStudent"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="placementCompany">Select Company <span class="text-danger">*</span></label>
+                            <select id="placementCompany" required>
+                                <option value="">Choose Company...</option>
+                            </select>
+                            <div class="field-error" id="error_placementCompany"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="placementJobRole">Job Role <span class="text-danger">*</span></label>
+                            <input type="text" id="placementJobRole" placeholder="e.g. Full Stack Developer" required>
+                            <div class="field-error" id="error_placementJobRole"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="placementPackage">Package (LPA) <span class="text-danger">*</span></label>
+                            <input type="number" id="placementPackage" step="0.01" min="0.1" placeholder="e.g. 12.0" required>
+                            <div class="field-error" id="error_placementPackage"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="placementDate">Placement / Offer Date <span class="text-danger">*</span></label>
+                        <input type="date" id="placementDate" required>
+                        <div class="field-error" id="error_placementDate"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="app.closeModal('placementModal')">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="btnSavePlacement">Save Placement</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 4. DELETE CONFIRMATION MODAL -->
+    <div class="modal-overlay" id="deleteConfirmModal">
+        <div class="modal-card modal-sm">
+            <div class="modal-header">
+                <h3>Confirm Deletion</h3>
+                <button class="modal-close" onclick="app.closeModal('deleteConfirmModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="delete-warning-icon">
+                    <svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="#dc2626" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="8" x2="12" y2="12"></line>
+                        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                    </svg>
+                </div>
+                <p id="deleteConfirmMessage" class="delete-msg">Are you sure you want to delete this record? This action cannot be undone.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="app.closeModal('deleteConfirmModal')">Cancel</button>
+                <button type="button" class="btn btn-danger" id="btnConfirmDelete">Delete Record</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notifications Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Scripts -->
+    <script src="/static/js/api.js"></script>
+    <script src="/static/js/students.js"></script>
+    <script src="/static/js/companies.js"></script>
+    <script src="/static/js/placements.js"></script>
+    <script src="/static/js/app.js"></script>
+</body>
+</html>

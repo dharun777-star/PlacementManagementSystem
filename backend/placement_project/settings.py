@@ -83,11 +83,22 @@ WSGI_APPLICATION = 'placement_project.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/6.1/ref/settings/#databases
+import shutil
+
+IS_VERCEL = 'VERCEL' in os.environ
+if IS_VERCEL:
+    tmp_db = Path('/tmp/db.sqlite3')
+    orig_db = BASE_DIR / 'db.sqlite3'
+    if not tmp_db.exists() and orig_db.exists():
+        shutil.copy2(orig_db, tmp_db)
+    db_path = tmp_db if tmp_db.exists() else orig_db
+else:
+    db_path = BASE_DIR / 'db.sqlite3'
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': db_path,
     }
 }
 

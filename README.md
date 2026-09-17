@@ -145,6 +145,21 @@ Open your browser and visit:
 
 ---
 
+## ⚡ Deploy to Vercel (1-Click)
+
+The repository is pre-configured with **`vercel.json`** and **`api/index.py`**:
+
+1. Log in to [https://vercel.com](https://vercel.com) using your GitHub account (`dharun777-star`).
+2. Click **Add New...** $\rightarrow$ **Project**.
+3. Select **`PlacementManagementSystem`**.
+4. Keep the default settings (**Root Directory: `./`**, **Framework: Other**).
+5. Click **Deploy**!
+6. In ~1 minute, your full-stack Placement Management System will be live on your custom `.vercel.app` URL!
+
+*(See [VERCEL_DEPLOYMENT.md](file:///c:/Users/dharun/Downloads/Oil-Twin-Ai-main%20%281%29/VERCEL_DEPLOYMENT.md) for full technical details).*
+
+---
+
 ## 🎓 Viva & Interview Preparation Guide
 
 ### Q1: What is the architectural pattern used in this system?
