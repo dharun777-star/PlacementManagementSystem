@@ -20,6 +20,9 @@ backend/staticfiles/
 # Logs
 *.log
 
+# Binaries
+cloudflared.exe
+
 # OS & Editor
 .DS_Store
 Thumbs.db

@@ -139,6 +139,7 @@ STORAGES = {
 }
 
 CSRF_TRUSTED_ORIGINS = [
+    'https://*.trycloudflare.com',
     'https://*.loca.lt',
     'https://*.onrender.com',
     'https://*.railway.app',

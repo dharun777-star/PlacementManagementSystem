@@ -1,10 +1,10 @@
 # PlacementHub - College Placement Management System
 
-[![Live Demo](https://img.shields.io/badge/Live_Demo-Online-brightgreen?style=for-the-badge&logo=google-chrome)](https://placement-hub-dharun.loca.lt)
+[![Live Demo](https://img.shields.io/badge/Live_Demo-Online-brightgreen?style=for-the-badge&logo=google-chrome)](https://spirit-bent-elements-ink.trycloudflare.com)
 [![GitHub Repo](https://img.shields.io/badge/GitHub-Repository-blue?style=for-the-badge&logo=github)](https://github.com/dharun777-star/PlacementManagementSystem)
 
-> 🌐 **Live Deployed URL**: **[https://placement-hub-dharun.loca.lt](https://placement-hub-dharun.loca.lt)**  
-> *(If prompted for Tunnel Password/IP by loca.lt, enter: `223.236.154.47`)*  
+> 🚀 **Live Deployed Website**: **[https://spirit-bent-elements-ink.trycloudflare.com](https://spirit-bent-elements-ink.trycloudflare.com)**  
+> *(Live public HTTPS link — instant access worldwide without any passwords or setup!)*  
 > 💻 **Local URL**: `http://127.0.0.1:8000/`  
 > 📂 **GitHub Repository**: [https://github.com/dharun777-star/PlacementManagementSystem](https://github.com/dharun777-star/PlacementManagementSystem)
 
